@@ -9,25 +9,25 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans pb-20 md:pb-0">
+<body class="bg-slate-100 text-slate-800 font-sans pb-24 md:pb-0">
 
   <!-- APP CONTAINER -->
   <div id="app" class="min-h-screen flex flex-col md:flex-row">
     
-    <!-- DESKTOP SIDEBAR (Tampil di Laptop/PC) -->
+    <!-- DESKTOP SIDEBAR -->
     <aside class="hidden md:flex flex-col w-64 bg-slate-900 text-white min-h-screen p-4 sticky top-0 h-screen">
       <div class="text-xl font-bold mb-8 flex items-center gap-2 text-blue-400">
-        <i class="fa-solid fa-[#007bff] fa-bolt"></i>
+        <i class="fa-solid fa-bolt"></i>
         <span>Jasa AC & Listrik</span>
       </div>
       <nav class="space-y-2 flex-1">
-        <button onclick="switchTab('input')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 flex items-center gap-3">
+        <button onclick="switchTab('input')" id="nav-input" class="nav-btn w-full text-left px-4 py-3 rounded-lg bg-blue-600 text-white flex items-center gap-3 font-medium">
           <i class="fa-solid fa-plus-circle w-5"></i> Input Order
         </button>
-        <button onclick="switchTab('orders')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 flex items-center gap-3">
+        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3">
           <i class="fa-solid fa-list-check w-5"></i> Daftar Order
         </button>
-        <button onclick="switchTab('reports')" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 flex items-center gap-3">
+        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3">
           <i class="fa-solid fa-chart-line w-5"></i> Laporan
         </button>
       </nav>
@@ -37,11 +37,11 @@
     </aside>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full">
+    <main class="flex-1 p-4 md:p-8 max-w-3xl mx-auto w-full">
       
-      <!-- MOBILE HEADER (Tampil di HP saja) -->
+      <!-- MOBILE HEADER -->
       <header class="md:hidden flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-        <h1 class="font-bold text-lg text-slate-800 flex items-center gap-2">
+        <h1 class="font-bold text-base text-slate-800 flex items-center gap-2">
           <i class="fa-solid fa-bolt text-blue-600"></i> Servis AC & Listrik
         </h1>
         <span class="text-xs bg-blue-100 text-blue-700 font-semibold px-2.5 py-1 rounded-full">Owner</span>
@@ -49,79 +49,198 @@
 
       <!-- TAB 1: FORM INPUT ORDER -->
       <section id="tab-input" class="tab-content">
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+        <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
+          <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800">
             <i class="fa-solid fa-pen-to-square text-blue-600"></i> Input Order Baru
           </h2>
-          <p class="text-slate-500 text-sm mb-6">Langkah selanjutnya: Kita akan membuat form input lengkap di sini pada Langkah 3.</p>
+          
+          <form id="orderForm" onsubmit="saveOrder(event)" class="space-y-4">
+            
+            <!-- Baris 1: Tanggal & Teknisi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Tanggal Instalasi / Pengerjaan</label>
+                <input type="date" id="installationDate" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm bg-white">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nama Teknisi</label>
+                <select id="technician" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm bg-white">
+                  <option value="" disabled selected>-- Pilih Teknisi --</option>
+                  <option value="JHON">JHON</option>
+                  <option value="MADUN">MADUN</option>
+                  <option value="RONI">RONI</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Nama Customer -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nama Customer</label>
+              <input type="text" id="customerName" required placeholder="Contoh: Bpk. Budi" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+            </div>
+
+            <!-- Alamat -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Alamat / Lokasi</label>
+              <textarea id="address" rows="2" required placeholder="Contoh: Jl. Mawar No. 10, Blok A" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"></textarea>
+            </div>
+
+            <!-- Jenis Pekerjaan -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Jenis Pekerjaan</label>
+              <select id="serviceType" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm bg-white">
+                <option value="" disabled selected>-- Pilih Jenis Pekerjaan --</option>
+                <option value="Cleaning">Cleaning</option>
+                <option value="Instalasi AC">Instalasi AC</option>
+                <option value="Instalasi Listrik">Instalasi Listrik</option>
+                <option value="Instalasi Water Heater">Instalasi Water Heater</option>
+              </select>
+            </div>
+
+            <!-- Asal Orderan & Jumlah Pekerjaan -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Asal Orderan</label>
+                <select id="channel" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm bg-white">
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Google Maps">Google Maps</option>
+                  <option value="Telepon Langsung">Telepon Langsung</option>
+                  <option value="Langganan / Tetangga">Langganan / Tetangga</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Jumlah Pekerjaan (Unit/Titik)</label>
+                <input type="number" id="quantity" min="1" value="1" required placeholder="Contoh: 2" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+              </div>
+            </div>
+
+            <!-- Harga Jasa -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Harga Jasa (Total Rp)</label>
+              <input type="number" id="fee" required placeholder="Contoh: 150000" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+            </div>
+
+            <!-- Tombol Simpan -->
+            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm shadow-md">
+              <i class="fa-solid fa-floppy-disk"></i> Simpan Orderan
+            </button>
+          </form>
         </div>
       </section>
 
       <!-- TAB 2: DAFTAR ORDER -->
       <section id="tab-orders" class="tab-content hidden">
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 class="text-xl font-bold mb-4">Daftar Orderan</h2>
-          <p class="text-slate-500 text-sm">Tempat melihat status orderan aktif.</p>
+        <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
+          <h2 class="text-lg font-bold mb-4 text-slate-800">Daftar Orderan Masuk</h2>
+          <p class="text-slate-500 text-sm">Data orderan yang tersimpan di Firebase akan muncul di sini (Akan kita aktifkan di Langkah Berikutnya).</p>
         </div>
       </section>
 
       <!-- TAB 3: LAPORAN -->
       <section id="tab-reports" class="tab-content hidden">
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 class="text-xl font-bold mb-4">Laporan & Rekap Keuangan</h2>
-          <p class="text-slate-500 text-sm">Tempat melihat omzet harian, bulanan, dan total jasa per teknisi.</p>
+        <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
+          <h2 class="text-lg font-bold mb-4 text-slate-800">Laporan & Rekap Keuangan</h2>
+          <p class="text-slate-500 text-sm">Rekap omzet harian, bulanan, dan total per teknisi (Akan kita aktifkan di Langkah Berikutnya).</p>
         </div>
       </section>
 
     </main>
 
-    <!-- MOBILE BOTTOM NAVIGATION (Tampil di HP saja) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-2 flex justify-around items-center z-50">
-      <button onclick="switchTab('input')" class="flex flex-col items-center gap-1 text-blue-600">
-        <i class="fa-solid fa-plus-circle text-xl"></i>
-        <span class="text-xs font-medium">Input</span>
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-2.5 flex justify-around items-center z-50 shadow-lg">
+      <button onclick="switchTab('input')" id="m-nav-input" class="flex flex-col items-center gap-1 text-blue-600">
+        <i class="fa-solid fa-plus-circle text-lg"></i>
+        <span class="text-[10px] font-semibold">Input</span>
       </button>
-      <button onclick="switchTab('orders')" class="flex flex-col items-center gap-1 text-slate-500">
-        <i class="fa-solid fa-list-check text-xl"></i>
-        <span class="text-xs font-medium">Orderan</span>
+      <button onclick="switchTab('orders')" id="m-nav-orders" class="flex flex-col items-center gap-1 text-slate-400">
+        <i class="fa-solid fa-list-check text-lg"></i>
+        <span class="text-[10px] font-semibold">Orderan</span>
       </button>
-      <button onclick="switchTab('reports')" class="flex flex-col items-center gap-1 text-slate-500">
-        <i class="fa-solid fa-chart-line text-xl"></i>
-        <span class="text-xs font-medium">Laporan</span>
+      <button onclick="switchTab('reports')" id="m-nav-reports" class="flex flex-col items-center gap-1 text-slate-400">
+        <i class="fa-solid fa-chart-line text-lg"></i>
+        <span class="text-[10px] font-semibold">Laporan</span>
       </button>
     </nav>
 
   </div>
 
-  <!-- SCRIPT SWITCH TAB UTAMA -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
+    // Otomatis isi tanggal hari ini saat halaman dibuka
+    document.addEventListener("DOMContentLoaded", () => {
+      const today = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('installationDate');
+      if(dateInput) dateInput.value = today;
+    });
+
+    // Fungsi Pindah Tab & Ubah Warna Menu Aktif
     function switchTab(tabName) {
-      // Sembunyikan semua konten tab
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      // Tampilkan tab yang dipilih
       document.getElementById('tab-' + tabName).classList.remove('hidden');
+
+      // Update Desktop Nav
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('hover:bg-slate-800', 'text-slate-300');
+      });
+      const activeNav = document.getElementById('nav-' + tabName);
+      if(activeNav) {
+        activeNav.classList.remove('hover:bg-slate-800', 'text-slate-300');
+        activeNav.classList.add('bg-blue-600', 'text-white');
+      }
+
+      // Update Mobile Nav
+      ['input', 'orders', 'reports'].forEach(t => {
+        const mBtn = document.getElementById('m-nav-' + t);
+        if(mBtn) {
+          mBtn.classList.remove('text-blue-600');
+          mBtn.classList.add('text-slate-400');
+        }
+      });
+      const activeMBtn = document.getElementById('m-nav-' + tabName);
+      if(activeMBtn) {
+        activeMBtn.classList.remove('text-slate-400');
+        activeMBtn.classList.add('text-blue-600');
+      }
     }
-  </script>
 
-  <!-- FIREBASE CONFIGURATION (Langkah Selanjutnya) -->
-  <script type="module">
-    // Import SDK Firebase dari CDN
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    // Fungsi Simpan Orderan (Sementara simulasi, nanti dihubungkan Firestore)
+    function saveOrder(event) {
+      event.preventDefault();
+      
+      const installationDate = document.getElementById('installationDate').value;
+      const technician = document.getElementById('technician').value;
+      const customerName = document.getElementById('customerName').value;
+      const address = document.getElementById('address').value;
+      const serviceType = document.getElementById('serviceType').value;
+      const channel = document.getElementById('channel').value;
+      const quantity = document.getElementById('quantity').value;
+      const fee = document.getElementById('fee').value;
 
-    // TODO: Ganti firebaseConfig ini dengan kunci project Firebase Anda
-    const firebaseConfig = {
-      apiKey: "PASTE_API_KEY_ANDA_DI_SINI",
-      authDomain: "PROJECT_ANDA.firebaseapp.com",
-      projectId: "PROJECT_ANDA",
-      storageBucket: "PROJECT_ANDA.appspot.com",
-      messagingSenderId: "123456789",
-      appId: "1:123456789:web:abcdef"
-    };
+      const orderData = {
+        installationDate,
+        technician,
+        customerName,
+        address,
+        serviceType,
+        channel,
+        quantity: Number(quantity),
+        fee: Number(fee),
+        status: "Selesai",
+        month: installationDate.substring(0, 7), // Format YYYY-MM untuk rekap bulanan
+        createdAt: new Date().getTime()
+      };
 
-    // Inisialisasi Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+      console.log("Data Order Siap Disimpan:", orderData);
+      alert("Form Berhasil Disimpan! Teknisi: " + technician + " | Pekerjaan: " + serviceType);
+      
+      // Reset form tapi tanggal tetap hari ini
+      document.getElementById('customerName').value = '';
+      document.getElementById('address').value = '';
+      document.getElementById('quantity').value = '1';
+      document.getElementById('fee').value = '';
+    }
   </script>
 
 </body>
