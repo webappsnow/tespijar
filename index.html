@@ -15,19 +15,19 @@
   <div id="app" class="min-h-screen flex flex-col md:flex-row">
     
     <!-- DESKTOP SIDEBAR -->
-    <aside class="hidden md:flex flex-col w-64 bg-slate-900 text-white min-h-screen p-4 sticky top-0 h-screen">
+    <aside class="hidden md:flex flex-col w-64 bg-slate-900 text-white min-h-screen p-4 sticky top-0 h-screen shadow-lg">
       <div class="text-xl font-bold mb-8 flex items-center gap-2 text-blue-400">
         <i class="fa-solid fa-bolt"></i>
         <span>Jasa AC & Listrik</span>
       </div>
       <nav class="space-y-2 flex-1">
-        <button onclick="switchTab('input')" id="nav-input" class="nav-btn w-full text-left px-4 py-3 rounded-lg bg-blue-600 text-white flex items-center gap-3 font-medium">
+        <button onclick="switchTab('input')" id="nav-input" class="nav-btn w-full text-left px-4 py-3 rounded-lg bg-blue-600 text-white flex items-center gap-3 font-medium transition-colors">
           <i class="fa-solid fa-plus-circle w-5"></i> Input Order
         </button>
-        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3">
+        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3 transition-colors">
           <i class="fa-solid fa-list-check w-5"></i> Daftar Order
         </button>
-        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3">
+        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3 transition-colors">
           <i class="fa-solid fa-chart-line w-5"></i> Laporan
         </button>
       </nav>
@@ -37,7 +37,7 @@
     </aside>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 p-4 md:p-8 max-w-3xl mx-auto w-full">
+    <main class="flex-1 p-4 md:p-8 max-w-4xl mx-auto w-full">
       
       <!-- MOBILE HEADER -->
       <header class="md:hidden flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
@@ -55,7 +55,6 @@
           </h2>
           
           <form id="orderForm" onsubmit="saveOrder(event)" class="space-y-4">
-            
             <!-- Baris 1: Tanggal & Teknisi -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -122,7 +121,7 @@
             </div>
 
             <!-- Tombol Simpan -->
-            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm shadow-md">
+            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm shadow-md cursor-pointer">
               <i class="fa-solid fa-floppy-disk"></i> Simpan Orderan
             </button>
           </form>
@@ -132,16 +131,56 @@
       <!-- TAB 2: DAFTAR ORDER -->
       <section id="tab-orders" class="tab-content hidden">
         <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 class="text-lg font-bold mb-4 text-slate-800">Daftar Orderan Masuk</h2>
-          <p class="text-slate-500 text-sm">Data orderan yang tersimpan di Firebase akan muncul di sini (Akan kita aktifkan di Langkah Berikutnya).</p>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold text-slate-800">Daftar Orderan Masuk</h2>
+            <span id="orderCount" class="text-xs bg-slate-100 px-3 py-1 rounded-full font-semibold text-slate-600">0 Order</span>
+          </div>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 uppercase">
+                  <th class="p-3">Tanggal / Teknisi</th>
+                  <th class="p-3">Customer & Alamat</th>
+                  <th class="p-3">Pekerjaan</th>
+                  <th class="p-3 text-right">Biaya Jasa</th>
+                  <th class="p-3 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="orderTableBody" class="divide-y divide-slate-100 text-sm">
+                <!-- Data akan dimasukkan otomatis lewat JavaScript -->
+                <tr>
+                  <td colspan="5" class="p-4 text-center text-slate-400">Memuat data...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
       <!-- TAB 3: LAPORAN -->
       <section id="tab-reports" class="tab-content hidden">
-        <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 class="text-lg font-bold mb-4 text-slate-800">Laporan & Rekap Keuangan</h2>
-          <p class="text-slate-500 text-sm">Rekap omzet harian, bulanan, dan total per teknisi (Akan kita aktifkan di Langkah Berikutnya).</p>
+        <div class="space-y-6">
+          
+          <!-- Card Ringkasan Bulan Ini -->
+          <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 rounded-2xl text-white shadow-md">
+            <h2 class="text-sm font-medium text-blue-100 uppercase tracking-wider mb-1">Total Omzet Jasa Bulan Ini</h2>
+            <div id="monthlyTotalRevenue" class="text-3xl font-extrabold mb-4">Rp 0</div>
+            <div class="flex gap-4 border-t border-blue-500/40 pt-4 text-xs">
+              <div>Total Orderan: <span id="monthlyTotalOrders" class="font-bold">0</span></div>
+            </div>
+          </div>
+
+          <!-- Rekap Per Teknisi -->
+          <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="text-md font-bold text-slate-800 mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-users text-blue-600"></i> Rekap Jasa Per Teknisi (Bulan Ini)
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="technicianReportContainer">
+              <!-- Diisi otomatis -->
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -165,16 +204,230 @@
 
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
-  <script>
-    // Otomatis isi tanggal hari ini saat halaman dibuka
+  <!-- JAVASCRIPT & FIREBASE LOGIC -->
+  <script type="module">
+    // Import Firebase SDK (Menggunakan CDN Modular)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // ==========================================
+    // KONFIGURASI FIREBASE ANDA
+    // ==========================================
+    // (Jika Anda punya project uji coba Firebase sendiri, ganti baris di bawah ini. 
+    //  Untuk sekarang kita gunakan inisialisasi standar).
+    const firebaseConfig = {
+      apiKey: "AIzaSyTestKeyForSimulationOnly-12345",
+      authDomain: "jasa-ac-listrik-default.firebaseapp.com",
+      projectId: "jasa-ac-listrik-default",
+      storageBucket: "jasa-ac-listrik-default.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
+    };
+
+    // Inisialisasi Firebase
+    // Catatan: Jika Anda belum membuat project Firebase sungguhan, 
+    // kita sediakan LocalStorage fallback agar aplikasi langsung bisa diuji offline di browser Anda!
+    let db = null;
+    let useLocalStorage = true; // Set true agar langsung bisa diuji tanpa konfigurasi Firebase ribet dulu
+
+    try {
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      useLocalStorage = false;
+    } catch (e) {
+      console.log("Menggunakan LocalStorage untuk pengujian lokal.");
+    }
+
+    // Tanggal Hari Ini di Form
     document.addEventListener("DOMContentLoaded", () => {
       const today = new Date().toISOString().split('T')[0];
       const dateInput = document.getElementById('installationDate');
       if(dateInput) dateInput.value = today;
+      
+      loadOrders();
     });
 
-    // Fungsi Pindah Tab & Ubah Warna Menu Aktif
+    // Global variable daftar order
+    window.ordersList = [];
+
+    // Fungsi Simpan Order
+    window.saveOrder = async function(event) {
+      event.preventDefault();
+      
+      const installationDate = document.getElementById('installationDate').value;
+      const technician = document.getElementById('technician').value;
+      const customerName = document.getElementById('customerName').value;
+      const address = document.getElementById('address').value;
+      const serviceType = document.getElementById('serviceType').value;
+      const channel = document.getElementById('channel').value;
+      const quantity = document.getElementById('quantity').value;
+      const fee = document.getElementById('fee').value;
+
+      const orderData = {
+        installationDate,
+        technician,
+        customerName,
+        address,
+        serviceType,
+        channel,
+        quantity: Number(quantity),
+        fee: Number(fee),
+        month: installationDate.substring(0, 7), // Format YYYY-MM
+        createdAt: Date.now()
+      };
+
+      try {
+        if (!useLocalStorage && db) {
+          await addDoc(collection(db, "orders"), orderData);
+        } else {
+          // Fallback LocalStorage untuk uji coba instan
+          let localData = JSON.parse(localStorage.getItem('local_orders') || '[]');
+          orderData.id = 'loc_' + Date.now();
+          localData.push(orderData);
+          localStorage.setItem('local_orders', JSON.stringify(localData));
+        }
+
+        alert("Sukses! Orderan atas nama " + customerName + " berhasil disimpan.");
+        document.getElementById('orderForm').reset();
+        document.getElementById('installationDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('quantity').value = '1';
+        
+        loadOrders();
+        switchTab('orders'); // Pindah otomatis ke daftar order
+      } catch (error) {
+        console.error("Gagal menyimpan:", error);
+        alert("Terjadi kesalahan saat menyimpan data.");
+      }
+    }
+
+    // Fungsi Muat Data Order
+    window.loadOrders = function() {
+      if (!useLocalStorage && db) {
+        // Ambil dari Firebase
+        const q = query(collection(db, "orders"), orderBy("installationDate", "desc"));
+        onSnapshot(q, (snapshot) => {
+          window.ordersList = [];
+          snapshot.forEach((docSnap) => {
+            window.ordersList.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          renderOrdersAndReports();
+        });
+      } else {
+        // Ambil dari LocalStorage
+        const localData = JSON.parse(localStorage.getItem('local_orders') || '[]');
+        window.ordersList = localData.sort((a, b) => b.installationDate.localeCompare(a.installationDate));
+        renderOrdersAndReports();
+      }
+    }
+
+    // Fungsi Hapus Order
+    window.deleteOrder = async function(id) {
+      if (confirm("Yakin ingin menghapus data orderan ini?")) {
+        if (!useLocalStorage && db) {
+          await deleteDoc(doc(db, "orders", id));
+        } else {
+          let localData = JSON.parse(localStorage.getItem('local_orders') || '[]');
+          localData = localData.filter(item => item.id !== id);
+          localStorage.setItem('local_orders', JSON.stringify(localData));
+          loadOrders();
+        }
+      }
+    }
+
+    // Render Tabel & Laporan
+    function renderOrdersAndReports() {
+      const tbody = document.getElementById('orderTableBody');
+      const countBadge = document.getElementById('orderCount');
+      tbody.innerHTML = '';
+      
+      countBadge.innerText = window.ordersList.length + ' Order';
+
+      if (window.ordersList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">Belum ada orderan masuk.</td></tr>`;
+        renderReports([]);
+        return;
+      }
+
+      window.ordersList.forEach(order => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="p-3">
+            <div class="font-semibold text-slate-800">${order.installationDate}</div>
+            <div class="text-xs text-blue-600 font-medium"><i class="fa-solid fa-user-gear"></i> ${order.technician}</div>
+          </td>
+          <td class="p-3">
+            <div class="font-bold text-slate-800">${order.customerName}</div>
+            <div class="text-xs text-slate-500 truncate max-w-xs">${order.address}</div>
+            <div class="text-[10px] text-slate-400 mt-0.5">Asal: ${order.channel}</div>
+          </td>
+          <td class="p-3">
+            <div class="font-medium text-slate-700">${order.serviceType}</div>
+            <div class="text-xs text-slate-400">Qty: ${order.quantity} Unit</div>
+          </td>
+          <td class="p-3 text-right font-bold text-slate-800">
+            Rp ${order.fee.toLocaleString('id-ID')}
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="deleteOrder('${order.id}')" class="text-red-500 hover:text-red-700 p-2 transition-colors cursor-pointer" title="Hapus">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      renderReports(window.ordersList);
+    }
+
+    // Render Menu Laporan Keuangan
+    function renderReports(data) {
+      const currentMonthStr = new Date().toISOString().substring(0, 7); // YYYY-MM
+      
+      // Filter bulan ini
+      const monthlyData = data.filter(item => item.month === currentMonthStr);
+      
+      const totalRevenue = monthlyData.reduce((sum, item) => sum + Number(item.fee), 0);
+      document.getElementById('monthlyTotalRevenue').innerText = 'Rp ' + totalRevenue.toLocaleString('id-ID');
+      document.getElementById('monthlyTotalOrders').innerText = monthlyData.length;
+
+      // Rekap per teknisi bulan ini
+      const techStats = {
+        'JHON': { count: 0, revenue: 0 },
+        'MADUN': { count: 0, revenue: 0 },
+        'RONI': { count: 0, revenue: 0 }
+      };
+
+      monthlyData.forEach(item => {
+        if (techStats[item.technician]) {
+          techStats[item.technician].count += 1;
+          techStats[item.technician].revenue += Number(item.fee);
+        }
+      });
+
+      const techContainer = document.getElementById('technicianReportContainer');
+      techContainer.innerHTML = '';
+
+      Object.keys(techStats).forEach(techName => {
+        const stat = techStats[techName];
+        const card = document.createElement('div');
+        card.className = "bg-slate-50 p-4 rounded-xl border border-slate-200";
+        card.innerHTML = `
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 text-base"><i class="fa-solid fa-user-shield text-blue-600"></i> ${techName}</span>
+            <span class="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-0.5 rounded-full">${stat.count} Job</span>
+          </div>
+          <div class="text-xs text-slate-500 mb-1">Total Jasa Bulan Ini:</div>
+          <div class="text-lg font-bold text-slate-900">Rp ${stat.revenue.toLocaleString('id-ID')}</div>
+        `;
+        techContainer.appendChild(card);
+      });
+    }
+
+  </script>
+
+  <!-- SCRIPT SWITCH TAB UTAMA -->
+  <script>
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.getElementById('tab-' + tabName).classList.remove('hidden');
@@ -203,43 +456,6 @@
         activeMBtn.classList.remove('text-slate-400');
         activeMBtn.classList.add('text-blue-600');
       }
-    }
-
-    // Fungsi Simpan Orderan (Sementara simulasi, nanti dihubungkan Firestore)
-    function saveOrder(event) {
-      event.preventDefault();
-      
-      const installationDate = document.getElementById('installationDate').value;
-      const technician = document.getElementById('technician').value;
-      const customerName = document.getElementById('customerName').value;
-      const address = document.getElementById('address').value;
-      const serviceType = document.getElementById('serviceType').value;
-      const channel = document.getElementById('channel').value;
-      const quantity = document.getElementById('quantity').value;
-      const fee = document.getElementById('fee').value;
-
-      const orderData = {
-        installationDate,
-        technician,
-        customerName,
-        address,
-        serviceType,
-        channel,
-        quantity: Number(quantity),
-        fee: Number(fee),
-        status: "Selesai",
-        month: installationDate.substring(0, 7), // Format YYYY-MM untuk rekap bulanan
-        createdAt: new Date().getTime()
-      };
-
-      console.log("Data Order Siap Disimpan:", orderData);
-      alert("Form Berhasil Disimpan! Teknisi: " + technician + " | Pekerjaan: " + serviceType);
-      
-      // Reset form tapi tanggal tetap hari ini
-      document.getElementById('customerName').value = '';
-      document.getElementById('address').value = '';
-      document.getElementById('quantity').value = '1';
-      document.getElementById('fee').value = '';
     }
   </script>
 
