@@ -6,77 +6,95 @@
   <title>Pijar Elektrik - Sistem Jasa AC & Listrik</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* Menerapkan font Inter ke seluruh elemen */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans pb-24 md:pb-0">
+<body class="bg-slate-50 text-slate-800 pb-24 md:pb-0">
 
   <!-- APP CONTAINER -->
   <div id="app" class="min-h-screen flex flex-col md:flex-row">
     
     <!-- DESKTOP SIDEBAR -->
-    <aside class="hidden md:flex flex-col w-64 bg-slate-900 text-white min-h-screen p-4 sticky top-0 h-screen shadow-lg">
+    <aside class="hidden md:flex flex-col w-72 bg-slate-900 text-white min-h-screen p-6 sticky top-0 h-screen shadow-xl border-r border-slate-800">
       <!-- LOGO & BRANDING -->
-      <div class="mb-8 flex items-center gap-3 px-2">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white text-xl shadow-md">
+      <div class="mb-8 flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-xl shadow-lg shadow-blue-500/30">
           <i class="fa-solid fa-bolt-lightning"></i>
         </div>
         <div>
-          <h1 class="font-extrabold text-base tracking-wide text-white">PIJAR ELEKTRIK</h1>
-          <p class="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Jasa AC & Listrik</p>
+          <h1 class="font-extrabold text-base tracking-wide text-white leading-tight">PIJAR ELEKTRIK</h1>
+          <p class="text-[11px] text-blue-400 font-semibold tracking-wider uppercase mt-0.5">Jasa AC & Listrik</p>
         </div>
       </div>
 
       <nav class="space-y-2 flex-1">
-        <button onclick="switchTab('input')" id="nav-input" class="nav-btn w-full text-left px-4 py-3 rounded-lg bg-blue-600 text-white flex items-center gap-3 font-medium transition-colors">
-          <i class="fa-solid fa-plus-circle w-5"></i> Input Order
+        <button onclick="switchTab('input')" id="nav-input" class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-blue-600 text-white flex items-center gap-3 font-semibold text-sm shadow-md shadow-blue-600/20 transition-all cursor-pointer">
+          <i class="fa-solid fa-plus-circle w-5 text-base"></i> Input Order
         </button>
-        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3 transition-colors">
-          <i class="fa-solid fa-list-check w-5"></i> Daftar Order
+        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 flex items-center gap-3 font-medium text-sm transition-all cursor-pointer">
+          <i class="fa-solid fa-list-check w-5 text-base"></i> Daftar Order
         </button>
-        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full text-left px-4 py-3 rounded-lg hover:bg-slate-800 text-slate-300 flex items-center gap-3 transition-colors">
-          <i class="fa-solid fa-chart-line w-5"></i> Laporan
+        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 flex items-center gap-3 font-medium text-sm transition-all cursor-pointer">
+          <i class="fa-solid fa-chart-line w-5 text-base"></i> Laporan
         </button>
       </nav>
-      <div class="text-xs text-slate-500 pt-4 border-t border-slate-800">
-        v1.0 Owner Dashboard
+      <div class="text-xs text-slate-500 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+        <span>Owner Dashboard</span>
+        <span class="bg-slate-800 text-slate-400 px-2 py-0.5 rounded text-[10px] font-semibold">v1.0</span>
       </div>
     </aside>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 p-4 md:p-8 max-w-4xl mx-auto w-full">
+    <main class="flex-1 p-4 md:p-10 max-w-4xl mx-auto w-full">
       
       <!-- MOBILE HEADER -->
-      <header class="md:hidden flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white text-sm shadow">
+      <header class="md:hidden flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-sm shadow-md shadow-blue-500/20">
             <i class="fa-solid fa-bolt-lightning"></i>
           </div>
           <div>
-            <h1 class="font-bold text-sm text-slate-800 leading-tight">PIJAR ELEKTRIK</h1>
-            <p class="text-[9px] text-slate-400 font-medium">AC & Listrik Service</p>
+            <h1 class="font-extrabold text-sm text-slate-900 leading-tight">PIJAR ELEKTRIK</h1>
+            <p class="text-[10px] text-blue-600 font-semibold uppercase tracking-wide">AC & Listrik Service</p>
           </div>
         </div>
-        <span class="text-xs bg-blue-100 text-blue-700 font-semibold px-2.5 py-1 rounded-full">Owner</span>
+        <span class="text-xs bg-blue-50 text-blue-700 font-bold px-3 py-1 rounded-full border border-blue-100">Owner</span>
       </header>
 
       <!-- TAB 1: FORM INPUT ORDER -->
       <section id="tab-input" class="tab-content">
-        <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-slate-800">
-            <i class="fa-solid fa-pen-to-square text-blue-600"></i> Input Order Baru
-          </h2>
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Input Order Baru</h2>
+              <p class="text-xs text-slate-500">Masukkan rincian pesanan layanan AC atau listrik di sini.</p>
+            </div>
+          </div>
           
-          <form id="orderForm" onsubmit="saveOrder(event)" class="space-y-4">
+          <form id="orderForm" onsubmit="saveOrder(event)" class="space-y-5">
             <!-- Baris 1: Tanggal & Teknisi -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Tanggal Instalasi / Pengerjaan</label>
-                <input type="date" id="installationDate" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm bg-white">
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Tanggal Instalasi / Pengerjaan</label>
+                <input type="date" id="installationDate" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nama Teknisi</label>
-                <select id="technician" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm bg-white">
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Nama Teknisi</label>
+                <select id="technician" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
                   <option value="" disabled selected>-- Pilih Teknisi --</option>
                   <option value="JHON">JHON</option>
                   <option value="MADUN">MADUN</option>
@@ -87,20 +105,20 @@
 
             <!-- Nama Customer -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nama Customer</label>
-              <input type="text" id="customerName" required placeholder="Contoh: Bpk. Budi" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Nama Customer</label>
+              <input type="text" id="customerName" required placeholder="Contoh: Bpk. Budi Santoso" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
             </div>
 
             <!-- Alamat -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Alamat / Lokasi</label>
-              <textarea id="address" rows="2" required placeholder="Contoh: Jl. Mawar No. 10, Blok A" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"></textarea>
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Alamat / Lokasi</label>
+              <textarea id="address" rows="2" required placeholder="Contoh: Jl. Mawar No. 10, Blok A" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all"></textarea>
             </div>
 
             <!-- Jenis Pekerjaan -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Jenis Pekerjaan</label>
-              <select id="serviceType" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm bg-white">
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Jenis Pekerjaan</label>
+              <select id="serviceType" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
                 <option value="" disabled selected>-- Pilih Jenis Pekerjaan --</option>
                 <option value="Cleaning">Cleaning</option>
                 <option value="Instalasi AC">Instalasi AC</option>
@@ -112,23 +130,26 @@
             <!-- Asal Orderan & Jumlah Pekerjaan -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Asal Orderan</label>
-                <input type="text" id="channel" required placeholder="Contoh: WhatsApp / Tetangga / FB Ads" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Asal Orderan</label>
+                <input type="text" id="channel" required placeholder="Contoh: WhatsApp / Tetangga / FB Ads" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Jumlah Pekerjaan (Unit/Titik)</label>
-                <input type="number" id="quantity" min="1" value="1" required placeholder="Contoh: 2" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Jumlah Pekerjaan (Unit/Titik)</label>
+                <input type="number" id="quantity" min="1" value="1" required placeholder="Contoh: 2" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
               </div>
             </div>
 
             <!-- Harga Jasa -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Harga Jasa (Total Rp)</label>
-              <input type="number" id="fee" required placeholder="Contoh: 150000" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+              <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Harga Jasa (Total Rp)</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-sm font-bold text-slate-400">Rp</span>
+                <input type="number" id="fee" required placeholder="150000" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
+              </div>
             </div>
 
             <!-- Tombol Simpan -->
-            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm shadow-md cursor-pointer">
+            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 text-sm cursor-pointer mt-2">
               <i class="fa-solid fa-floppy-disk"></i> Simpan Orderan
             </button>
           </form>
@@ -137,26 +158,29 @@
 
       <!-- TAB 2: DAFTAR ORDER -->
       <section id="tab-orders" class="tab-content hidden">
-        <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold text-slate-800">Daftar Orderan Masuk</h2>
-            <span id="orderCount" class="text-xs bg-slate-100 px-3 py-1 rounded-full font-semibold text-slate-600">0 Order</span>
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Daftar Orderan Masuk</h2>
+              <p class="text-xs text-slate-500">Semua riwayat pesanan yang telah dicatat.</p>
+            </div>
+            <span id="orderCount" class="text-xs bg-blue-50 text-blue-700 font-bold px-3 py-1.5 rounded-full border border-blue-100">0 Order</span>
           </div>
           
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
               <thead>
-                <tr class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 uppercase">
-                  <th class="p-3">Tanggal / Teknisi</th>
-                  <th class="p-3">Customer & Alamat</th>
-                  <th class="p-3">Pekerjaan</th>
-                  <th class="p-3 text-right">Biaya Jasa</th>
-                  <th class="p-3 text-center">Aksi</th>
+                <tr class="bg-slate-50/75 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                  <th class="p-3.5 rounded-l-xl">Tanggal / Teknisi</th>
+                  <th class="p-3.5">Customer & Alamat</th>
+                  <th class="p-3.5">Pekerjaan</th>
+                  <th class="p-3.5 text-right">Biaya Jasa</th>
+                  <th class="p-3.5 text-center rounded-r-xl">Aksi</th>
                 </tr>
               </thead>
               <tbody id="orderTableBody" class="divide-y divide-slate-100 text-sm">
                 <tr>
-                  <td colspan="5" class="p-4 text-center text-slate-400">Memuat data...</td>
+                  <td colspan="5" class="p-6 text-center text-slate-400 font-medium">Memuat data...</td>
                 </tr>
               </tbody>
             </table>
@@ -169,18 +193,22 @@
         <div class="space-y-6">
           
           <!-- Card Ringkasan Bulan Ini -->
-          <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 rounded-2xl text-white shadow-md">
-            <h2 class="text-sm font-medium text-blue-100 uppercase tracking-wider mb-1">Total Omzet Jasa Bulan Ini</h2>
-            <div id="monthlyTotalRevenue" class="text-3xl font-extrabold mb-4">Rp 0</div>
-            <div class="flex gap-4 border-t border-blue-500/40 pt-4 text-xs">
-              <div>Total Orderan: <span id="monthlyTotalOrders" class="font-bold">0</span></div>
+          <div class="bg-gradient-to-tr from-blue-600 via-blue-700 to-indigo-700 p-6 md:p-8 rounded-2xl text-white shadow-xl shadow-blue-600/20 relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+            <h2 class="text-xs font-bold text-blue-200 uppercase tracking-wider mb-1">Total Omzet Jasa Bulan Ini</h2>
+            <div id="monthlyTotalRevenue" class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">Rp 0</div>
+            <div class="flex items-center gap-2 border-t border-white/20 pt-4 text-xs font-medium text-blue-100">
+              <span class="bg-white/20 px-2.5 py-1 rounded-lg"><span id="monthlyTotalOrders" class="font-bold">0</span> Order Selesai</span>
             </div>
           </div>
 
           <!-- Rekap Per Teknisi -->
-          <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-200">
-            <h3 class="text-md font-bold text-slate-800 mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-users text-blue-600"></i> Rekap Jasa Per Teknisi (Bulan Ini)
+          <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/80">
+            <h3 class="text-base font-bold text-slate-900 mb-5 flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              Rekap Jasa Per Teknisi (Bulan Ini)
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="technicianReportContainer">
             </div>
@@ -192,24 +220,24 @@
     </main>
 
     <!-- MOBILE BOTTOM NAVIGATION -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-2.5 flex justify-around items-center z-50 shadow-lg">
-      <button onclick="switchTab('input')" id="m-nav-input" class="flex flex-col items-center gap-1 text-blue-600">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-6 py-3 flex justify-around items-center z-50 shadow-xl">
+      <button onclick="switchTab('input')" id="m-nav-input" class="flex flex-col items-center gap-1 text-blue-600 transition-all">
         <i class="fa-solid fa-plus-circle text-lg"></i>
-        <span class="text-[10px] font-semibold">Input</span>
+        <span class="text-[10px] font-bold tracking-wide">Input</span>
       </button>
-      <button onclick="switchTab('orders')" id="m-nav-orders" class="flex flex-col items-center gap-1 text-slate-400">
+      <button onclick="switchTab('orders')" id="m-nav-orders" class="flex flex-col items-center gap-1 text-slate-400 transition-all">
         <i class="fa-solid fa-list-check text-lg"></i>
-        <span class="text-[10px] font-semibold">Orderan</span>
+        <span class="text-[10px] font-bold tracking-wide">Orderan</span>
       </button>
-      <button onclick="switchTab('reports')" id="m-nav-reports" class="flex flex-col items-center gap-1 text-slate-400">
+      <button onclick="switchTab('reports')" id="m-nav-reports" class="flex flex-col items-center gap-1 text-slate-400 transition-all">
         <i class="fa-solid fa-chart-line text-lg"></i>
-        <span class="text-[10px] font-semibold">Laporan</span>
+        <span class="text-[10px] font-bold tracking-wide">Laporan</span>
       </button>
     </nav>
 
   </div>
 
-  <!-- JAVASCRIPT & FIREBASE LOGIC -->
+  <!-- JAVASCRIPT LOGIC -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -330,33 +358,33 @@
       countBadge.innerText = window.ordersList.length + ' Order';
 
       if (window.ordersList.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">Belum ada orderan masuk.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-medium">Belum ada orderan masuk.</td></tr>`;
         renderReports([]);
         return;
       }
 
       window.ordersList.forEach(order => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.className = "hover:bg-slate-50/80 transition-colors border-b border-slate-100";
         tr.innerHTML = `
-          <td class="p-3">
-            <div class="font-semibold text-slate-800">${order.installationDate}</div>
-            <div class="text-xs text-blue-600 font-medium"><i class="fa-solid fa-user-gear"></i> ${order.technician}</div>
+          <td class="p-3.5">
+            <div class="font-bold text-slate-900">${order.installationDate}</div>
+            <div class="text-xs text-blue-600 font-semibold mt-0.5"><i class="fa-solid fa-user-gear"></i> ${order.technician}</div>
           </td>
-          <td class="p-3">
-            <div class="font-bold text-slate-800">${order.customerName}</div>
-            <div class="text-xs text-slate-500 truncate max-w-xs">${order.address}</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">Asal: ${order.channel}</div>
+          <td class="p-3.5">
+            <div class="font-bold text-slate-900">${order.customerName}</div>
+            <div class="text-xs text-slate-500 truncate max-w-xs mt-0.5">${order.address}</div>
+            <div class="text-[10px] text-slate-400 mt-1 font-medium bg-slate-100 inline-block px-2 py-0.5 rounded">Asal: ${order.channel}</div>
           </td>
-          <td class="p-3">
-            <div class="font-medium text-slate-700">${order.serviceType}</div>
-            <div class="text-xs text-slate-400">Qty: ${order.quantity} Unit</div>
+          <td class="p-3.5">
+            <div class="font-semibold text-slate-800">${order.serviceType}</div>
+            <div class="text-xs text-slate-400 mt-0.5">Qty: ${order.quantity} Unit/Titik</div>
           </td>
-          <td class="p-3 text-right font-bold text-slate-800">
+          <td class="p-3.5 text-right font-extrabold text-slate-900">
             Rp ${order.fee.toLocaleString('id-ID')}
           </td>
-          <td class="p-3 text-center">
-            <button onclick="deleteOrder('${order.id}')" class="text-red-500 hover:text-red-700 p-2 transition-colors cursor-pointer" title="Hapus">
+          <td class="p-3.5 text-center">
+            <button onclick="deleteOrder('${order.id}')" class="text-slate-400 hover:text-red-600 p-2 transition-colors cursor-pointer rounded-lg hover:bg-red-50" title="Hapus">
               <i class="fa-solid fa-trash-can"></i>
             </button>
           </td>
@@ -394,14 +422,16 @@
       Object.keys(techStats).forEach(techName => {
         const stat = techStats[techName];
         const card = document.createElement('div');
-        card.className = "bg-slate-50 p-4 rounded-xl border border-slate-200";
+        card.className = "bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 hover:border-blue-200 transition-all shadow-sm";
         card.innerHTML = `
-          <div class="flex justify-between items-center mb-2">
-            <span class="font-bold text-slate-800 text-base"><i class="fa-solid fa-user-shield text-blue-600"></i> ${techName}</span>
-            <span class="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-0.5 rounded-full">${stat.count} Job</span>
+          <div class="flex justify-between items-center mb-3">
+            <span class="font-bold text-slate-900 text-sm flex items-center gap-2">
+              <div class="w-2 h-2 rounded-full bg-blue-600"></div> ${techName}
+            </span>
+            <span class="text-xs bg-blue-100/70 text-blue-700 font-bold px-2.5 py-1 rounded-full">${stat.count} Job</span>
           </div>
-          <div class="text-xs text-slate-500 mb-1">Total Jasa Bulan Ini:</div>
-          <div class="text-lg font-bold text-slate-900">Rp ${stat.revenue.toLocaleString('id-ID')}</div>
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Total Jasa Bulan Ini:</div>
+          <div class="text-lg font-extrabold text-slate-900">Rp ${stat.revenue.toLocaleString('id-ID')}</div>
         `;
         techContainer.appendChild(card);
       });
@@ -416,13 +446,13 @@
       document.getElementById('tab-' + tabName).classList.remove('hidden');
 
       document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('bg-blue-600', 'text-white');
-        btn.classList.add('hover:bg-slate-800', 'text-slate-300');
+        btn.classList.remove('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-600/20');
+        btn.classList.add('hover:bg-slate-800/80', 'text-slate-300');
       });
       const activeNav = document.getElementById('nav-' + tabName);
       if(activeNav) {
-        activeNav.classList.remove('hover:bg-slate-800', 'text-slate-300');
-        activeNav.classList.add('bg-blue-600', 'text-white');
+        activeNav.classList.remove('hover:bg-slate-800/80', 'text-slate-300');
+        activeNav.classList.add('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-600/20');
       }
 
       ['input', 'orders', 'reports'].forEach(t => {
