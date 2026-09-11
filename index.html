@@ -14,22 +14,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* Menerapkan font Inter ke seluruh elemen */
     body {
       font-family: 'Inter', sans-serif;
     }
+    /* Animasi smooth saat tab berganti */
+    .tab-content {
+      animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 pb-24 md:pb-0">
+<body class="bg-slate-50/50 text-slate-800 pb-24 md:pb-0 antialiased selection:bg-blue-600 selection:text-white">
 
   <!-- APP CONTAINER -->
   <div id="app" class="min-h-screen flex flex-col md:flex-row">
     
     <!-- DESKTOP SIDEBAR -->
-    <aside class="hidden md:flex flex-col w-72 bg-slate-900 text-white min-h-screen p-6 sticky top-0 h-screen shadow-xl border-r border-slate-800">
+    <aside class="hidden md:flex flex-col w-72 bg-slate-900 text-white min-h-screen p-6 sticky top-0 h-screen shadow-xl border-r border-slate-800/80">
       <!-- LOGO & BRANDING -->
       <div class="mb-8 flex items-center gap-3.5">
-        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-xl shadow-lg shadow-blue-500/30">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-xl shadow-lg shadow-blue-500/25">
           <i class="fa-solid fa-bolt-lightning"></i>
         </div>
         <div>
@@ -39,13 +46,13 @@
       </div>
 
       <nav class="space-y-2 flex-1">
-        <button onclick="switchTab('input')" id="nav-input" class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-blue-600 text-white flex items-center gap-3 font-semibold text-sm shadow-md shadow-blue-600/20 transition-all cursor-pointer">
+        <button onclick="switchTab('input')" id="nav-input" class="nav-btn w-full text-left px-4 py-3 rounded-xl bg-blue-600 text-white flex items-center gap-3 font-semibold text-sm shadow-md shadow-blue-600/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <i class="fa-solid fa-plus-circle w-5 text-base"></i> Input Order
         </button>
-        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 flex items-center gap-3 font-medium text-sm transition-all cursor-pointer">
+        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 flex items-center gap-3 font-medium text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <i class="fa-solid fa-list-check w-5 text-base"></i> Daftar Order
         </button>
-        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 flex items-center gap-3 font-medium text-sm transition-all cursor-pointer">
+        <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full text-left px-4 py-3 rounded-xl hover:bg-slate-800/80 text-slate-300 flex items-center gap-3 font-medium text-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <i class="fa-solid fa-chart-line w-5 text-base"></i> Laporan
         </button>
       </nav>
@@ -76,12 +83,12 @@
       <section id="tab-input" class="tab-content">
         <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/80">
           <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg shadow-inner">
               <i class="fa-solid fa-pen-to-square"></i>
             </div>
             <div>
               <h2 class="text-lg font-bold text-slate-900">Input Order Baru</h2>
-              <p class="text-xs text-slate-500">Masukkan rincian pesanan layanan AC atau listrik di sini.</p>
+              <p class="text-xs text-slate-500">Catat pesanan layanan instalasi atau perbaikan.</p>
             </div>
           </div>
           
@@ -106,13 +113,13 @@
             <!-- Nama Customer -->
             <div>
               <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Nama Customer</label>
-              <input type="text" id="customerName" required placeholder="Contoh: Bpk. Budi Santoso" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
+              <input type="text" id="customerName" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
             </div>
 
             <!-- Alamat -->
             <div>
               <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Alamat / Lokasi</label>
-              <textarea id="address" rows="2" required placeholder="Contoh: Jl. Mawar No. 10, Blok A" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all"></textarea>
+              <textarea id="address" rows="2" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all"></textarea>
             </div>
 
             <!-- Jenis Pekerjaan -->
@@ -131,11 +138,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Asal Orderan</label>
-                <input type="text" id="channel" required placeholder="Contoh: WhatsApp / Tetangga / FB Ads" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
+                <input type="text" id="channel" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Jumlah Pekerjaan (Unit/Titik)</label>
-                <input type="number" id="quantity" min="1" value="1" required placeholder="Contoh: 2" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
+                <input type="number" id="quantity" min="1" value="1" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
               </div>
             </div>
 
@@ -144,12 +151,12 @@
               <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Harga Jasa (Total Rp)</label>
               <div class="relative">
                 <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-sm font-bold text-slate-400">Rp</span>
-                <input type="number" id="fee" required placeholder="150000" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
+                <input type="number" id="fee" required class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:outline-none text-sm bg-slate-50/50 font-medium transition-all">
               </div>
             </div>
 
             <!-- Tombol Simpan -->
-            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 text-sm cursor-pointer mt-2">
+            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-blue-600/25 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 text-sm cursor-pointer mt-2">
               <i class="fa-solid fa-floppy-disk"></i> Simpan Orderan
             </button>
           </form>
@@ -180,7 +187,7 @@
               </thead>
               <tbody id="orderTableBody" class="divide-y divide-slate-100 text-sm">
                 <tr>
-                  <td colspan="5" class="p-6 text-center text-slate-400 font-medium">Memuat data...</td>
+                  <td colspan="5" class="p-8 text-center text-slate-400 font-medium">Memuat data...</td>
                 </tr>
               </tbody>
             </table>
@@ -205,7 +212,7 @@
           <!-- Rekap Per Teknisi -->
           <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/80">
             <h3 class="text-base font-bold text-slate-900 mb-5 flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm shadow-inner">
                 <i class="fa-solid fa-users"></i>
               </div>
               Rekap Jasa Per Teknisi (Bulan Ini)
@@ -221,15 +228,15 @@
 
     <!-- MOBILE BOTTOM NAVIGATION -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-6 py-3 flex justify-around items-center z-50 shadow-xl">
-      <button onclick="switchTab('input')" id="m-nav-input" class="flex flex-col items-center gap-1 text-blue-600 transition-all">
+      <button onclick="switchTab('input')" id="m-nav-input" class="flex flex-col items-center gap-1 text-blue-600 transition-all duration-200 active:scale-90">
         <i class="fa-solid fa-plus-circle text-lg"></i>
         <span class="text-[10px] font-bold tracking-wide">Input</span>
       </button>
-      <button onclick="switchTab('orders')" id="m-nav-orders" class="flex flex-col items-center gap-1 text-slate-400 transition-all">
+      <button onclick="switchTab('orders')" id="m-nav-orders" class="flex flex-col items-center gap-1 text-slate-400 transition-all duration-200 active:scale-90">
         <i class="fa-solid fa-list-check text-lg"></i>
         <span class="text-[10px] font-bold tracking-wide">Orderan</span>
       </button>
-      <button onclick="switchTab('reports')" id="m-nav-reports" class="flex flex-col items-center gap-1 text-slate-400 transition-all">
+      <button onclick="switchTab('reports')" id="m-nav-reports" class="flex flex-col items-center gap-1 text-slate-400 transition-all duration-200 active:scale-90">
         <i class="fa-solid fa-chart-line text-lg"></i>
         <span class="text-[10px] font-bold tracking-wide">Laporan</span>
       </button>
