@@ -34,6 +34,7 @@
     <!-- DESKTOP SIDEBAR -->
     <aside class="hidden md:flex flex-col w-72 bg-slate-900 text-white min-h-screen p-6 sticky top-0 h-screen shadow-xl border-r border-slate-800/80">
       <div class="mb-8 flex items-center gap-3.5">
+        <!-- Area Logo: Bisa diganti <img src="logo.png"> jika sudah punya file logo -->
         <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-xl shadow-lg shadow-blue-500/25">
           <i class="fa-solid fa-bolt-lightning"></i>
         </div>
@@ -165,9 +166,8 @@
             <span id="orderCount" class="text-xs bg-blue-50 text-blue-700 font-bold px-3 py-1.5 rounded-full border border-blue-100">0 Order</span>
           </div>
           
-          <!-- DAFTAR ORDER CONTAINER (Responsive: Card untuk HP, Tabel untuk Laptop) -->
           <div id="orderListContainer" class="space-y-4">
-            <div class="p-6 text-center text-slate-400 font-medium">Memuat data...</div>
+            <div class="p-8 text-center text-slate-400 font-medium">Memuat data...</div>
           </div>
         </div>
       </section>
@@ -175,25 +175,35 @@
       <!-- TAB 3: LAPORAN -->
       <section id="tab-reports" class="tab-content hidden">
         <div class="space-y-6">
+          
+          <!-- FILTER BULAN LAPORAN -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center justify-between gap-4">
+            <label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Pilih Bulan Laporan:</label>
+            <input type="month" id="reportMonthFilter" onchange="renderReports(window.ordersList)" class="px-4 py-2 rounded-xl border border-slate-300 text-sm font-bold bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          </div>
+
+          <!-- Card Ringkasan Bulan Terpilih -->
           <div class="bg-gradient-to-tr from-blue-600 via-blue-700 to-indigo-700 p-6 md:p-8 rounded-2xl text-white shadow-xl shadow-blue-600/20 relative overflow-hidden">
             <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-            <h2 class="text-xs font-bold text-blue-200 uppercase tracking-wider mb-1">Total Omzet Jasa Bulan Ini</h2>
+            <h2 id="reportTitleMonth" class="text-xs font-bold text-blue-200 uppercase tracking-wider mb-1">Total Omzet Jasa Bulan Ini</h2>
             <div id="monthlyTotalRevenue" class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">Rp 0</div>
             <div class="flex items-center gap-2 border-t border-white/20 pt-4 text-xs font-medium text-blue-100">
               <span class="bg-white/20 px-2.5 py-1 rounded-lg"><span id="monthlyTotalOrders" class="font-bold">0</span> Order Selesai</span>
             </div>
           </div>
 
+          <!-- Rekap Per Teknisi -->
           <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/80">
             <h3 class="text-base font-bold text-slate-900 mb-5 flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm shadow-inner">
                 <i class="fa-solid fa-users"></i>
               </div>
-              Rekap Jasa Per Teknisi (Bulan Ini)
+              Rekap Jasa Per Teknisi (Bulan Terpilih)
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="technicianReportContainer">
             </div>
           </div>
+
         </div>
       </section>
 
@@ -244,8 +254,15 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const today = new Date().toISOString().split('T')[0];
+      const currentMonth = today.substring(0, 7);
+
+      // Set tanggal form hari ini
       const dateInput = document.getElementById('installationDate');
       if(dateInput) dateInput.value = today;
+
+      // Set filter bulan laporan ke bulan berjalan secara otomatis
+      const monthFilter = document.getElementById('reportMonthFilter');
+      if(monthFilter) monthFilter.value = currentMonth;
       
       loadOrders();
     });
@@ -345,7 +362,7 @@
 
       window.ordersList.forEach(order => {
         const card = document.createElement('div');
-        card.className = "bg-white p-4.5 rounded-2xl border border-slate-200/80 shadow-sm hover:border-blue-200 transition-all space-y-3";
+        card.className = "bg-white p-4.5 rounded-2xl border border-slate-200/85 shadow-sm hover:border-blue-200 transition-all space-y-3";
         card.innerHTML = `
           <div class="flex justify-between items-start gap-2">
             <div>
@@ -378,9 +395,20 @@
       renderReports(window.ordersList);
     }
 
-    function renderReports(data) {
-      const currentMonthStr = new Date().toISOString().substring(0, 7);
-      const monthlyData = data.filter(item => item.month === currentMonthStr);
+    // Fungsi Render Laporan Berdasarkan Filter Bulan
+    window.renderReports = function(data) {
+      const monthFilterInput = document.getElementById('reportMonthFilter');
+      const selectedMonth = monthFilterInput ? monthFilterInput.value : new Date().toISOString().substring(0, 7);
+      
+      // Ubah judul card sesuai bulan yang dipilih
+      const [year, month] = selectedMonth.split('-');
+      const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      const formattedMonthName = monthNames[parseInt(month) - 1] + " " + year;
+      
+      document.getElementById('reportTitleMonth').innerText = "Total Omzet Jasa Bulan " + formattedMonthName;
+
+      // Filter data berdasarkan bulan yang dipilih di input
+      const monthlyData = data.filter(item => item.month === selectedMonth);
       
       const totalRevenue = monthlyData.reduce((sum, item) => sum + Number(item.fee), 0);
       document.getElementById('monthlyTotalRevenue').innerText = 'Rp ' + totalRevenue.toLocaleString('id-ID');
