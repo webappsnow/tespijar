@@ -34,10 +34,8 @@
     <!-- DESKTOP SIDEBAR -->
     <aside class="hidden md:flex flex-col w-72 bg-slate-900 text-white min-h-screen p-6 sticky top-0 h-screen shadow-xl border-r border-slate-800/80">
       <div class="mb-8 flex items-center gap-3.5">
-        <!-- Area Logo: Bisa diganti <img src="logo.png"> jika sudah punya file logo -->
-        <div>
-          <img src="logo.png" alt="Pijar Elektrik" class="w-11 h-11 rounded-2xl object-cover shadow-lg shadow-blue-500/25">
-        </div>
+        <!-- LOGO DESKTOP -->
+        <img src="logo.png" alt="Pijar Elektrik" class="w-11 h-11 rounded-2xl object-cover shadow-lg shadow-blue-500/25 bg-blue-600">
         <div>
           <h1 class="font-extrabold text-base tracking-wide text-white leading-tight">PIJAR ELEKTRIK</h1>
           <p class="text-[11px] text-blue-400 font-semibold tracking-wider uppercase mt-0.5">Jasa AC & Listrik</p>
@@ -67,9 +65,8 @@
       <!-- MOBILE HEADER -->
       <header class="md:hidden flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-sm shadow-md shadow-blue-500/20">
-            <i class="fa-solid fa-bolt-lightning"></i>
-          </div>
+          <!-- LOGO MOBILE -->
+          <img src="logo.png" alt="Pijar Elektrik" class="w-9 h-9 rounded-xl object-cover shadow-md shadow-blue-500/20 bg-blue-600">
           <div>
             <h1 class="font-extrabold text-sm text-slate-900 leading-tight">PIJAR ELEKTRIK</h1>
             <p class="text-[10px] text-blue-600 font-semibold uppercase tracking-wide">AC & Listrik Service</p>
@@ -256,11 +253,9 @@
       const today = new Date().toISOString().split('T')[0];
       const currentMonth = today.substring(0, 7);
 
-      // Set tanggal form hari ini
       const dateInput = document.getElementById('installationDate');
       if(dateInput) dateInput.value = today;
 
-      // Set filter bulan laporan ke bulan berjalan secara otomatis
       const monthFilter = document.getElementById('reportMonthFilter');
       if(monthFilter) monthFilter.value = currentMonth;
       
@@ -395,19 +390,16 @@
       renderReports(window.ordersList);
     }
 
-    // Fungsi Render Laporan Berdasarkan Filter Bulan
     window.renderReports = function(data) {
       const monthFilterInput = document.getElementById('reportMonthFilter');
       const selectedMonth = monthFilterInput ? monthFilterInput.value : new Date().toISOString().substring(0, 7);
       
-      // Ubah judul card sesuai bulan yang dipilih
       const [year, month] = selectedMonth.split('-');
       const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
       const formattedMonthName = monthNames[parseInt(month) - 1] + " " + year;
       
       document.getElementById('reportTitleMonth').innerText = "Total Omzet Jasa Bulan " + formattedMonthName;
 
-      // Filter data berdasarkan bulan yang dipilih di input
       const monthlyData = data.filter(item => item.month === selectedMonth);
       
       const totalRevenue = monthlyData.reduce((sum, item) => sum + Number(item.fee), 0);
